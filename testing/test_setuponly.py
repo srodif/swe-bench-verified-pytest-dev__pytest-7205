@@ -292,3 +292,23 @@ def test_setup_show_with_KeyboardInterrupt_in_test(testdir):
         ]
     )
     assert result.ret == ExitCode.INTERRUPTED
+
+
+def test_show_fixtures_with_bytes_parameter(testdir):
+    """Test that --setup-show works with bytes parameters without BytesWarning."""
+    p = testdir.makepyfile(
+        """
+        import pytest
+        @pytest.mark.parametrize('data', [b'Hello World'])
+        def test_data(data):
+            pass
+    """
+    )
+    
+    result = testdir.runpytest("--setup-show", p)
+    assert result.ret == 0
+    
+    # Check that the bytes parameter is displayed with proper representation
+    result.stdout.fnmatch_lines(
+        ["*SETUP    F data?b'Hello World'?*"]
+    )
