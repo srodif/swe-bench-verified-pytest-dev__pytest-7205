@@ -295,7 +295,7 @@ def test_setup_show_with_KeyboardInterrupt_in_test(testdir):
 
 
 def test_show_fixtures_with_bytes_parameter(testdir):
-    """Test that --setup-show works with bytes parameters without BytesWarning."""
+    """ Test that --setup-show works with bytes parameters without BytesWarning. """
     p = testdir.makepyfile(
         """
         import pytest
